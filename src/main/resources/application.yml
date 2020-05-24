@@ -1,0 +1,41 @@
+server:
+  port: 8080
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: TEST_TOPIC_INPUT
+#          useNativeDecoding: true
+          consumer:
+            useNativeDecoding: true
+        output:
+          destination: TEST_TOPIC_OUTPUT
+          useNativeEncoding: true
+          producer:
+            useNativeEncoding: true
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: group-id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    streams:
+      binders:
+        input:
+          consumer:
+            keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        inputTable:
+          consumer:
+            keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+          output:
+            producer:
+              keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
